@@ -24,13 +24,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  var cuvRomana=<String>{'salut','ma numesc','cum esti?','sunt bine'};
-  var cuvGermana=<String>{'salut(Germana)','ma numesc(Germana)','cum esti?(Germana)','sunt bine(Germana)'};
+  Set<String> cuvRomana = <String>{'salut', 'ma numesc', 'cum esti?', 'sunt bine'};
+  Set<String> cuvGermana = <String>{'salut(Germana)', 'ma numesc(Germana)', 'cum esti?(Germana)', 'sunt bine(Germana)'};
 
   Future<void> playAudio(String audioPath) async {
-    var player = AudioPlayer();
-    await player.play(AssetSource(audioPath));
+    final AudioPlayer player = AudioPlayer();
+    await player.setSource(AssetSource(audioPath));
   }
 
   Widget buildPhraseBox(String text, String audioPath) {
@@ -44,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             gradient: LinearGradient(
               end: Alignment.centerRight,
               begin: Alignment.centerLeft,
-              colors: [
+              colors: <Color>[
                 Colors.blueAccent,
                 Colors.lightBlueAccent,
               ],
@@ -69,30 +68,29 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Basic Phrases",
-            style: TextStyle(color: Colors.white)),
+        title: const Text('Basic Phrases', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
       body: ListView.builder(
         itemCount: cuvRomana.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 buildPhraseBox(
-                  cuvRomana.elementAt(index),
+                    cuvRomana.elementAt(index),
                     // 'assets/audio/basic_phrases/0${2*index+1}.mp3'
-                    'audio/basic_phrases/01.mp3/'
+                    'audio/basic_phrases/01.mp3/'),
+                const SizedBox(
+                  width: 20,
                 ),
-                SizedBox(width: 20,),
                 buildPhraseBox(
-                  cuvGermana.elementAt(index),
+                    cuvGermana.elementAt(index),
                     // 'assets/audio/basic_phrases/0${2*index+2}.mp3'
-                  'audio/basic_phrases/01.mp3'
-                ),
+                    'audio/basic_phrases/01.mp3'),
               ],
             ),
           );
